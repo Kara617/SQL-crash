@@ -1,0 +1,12 @@
+好评率是会员对平台评价的重要指标。现在需要统计2018年1月1日到2018年1月31日，用户'小明'提交的母婴类目"花王"品牌的好评率（好评率=“好评”评价量/总评价量）:
+用户评价详情表：a  
+字段：id（评价id，主键），create_time（评价创建时间，格式'2017-01-01'）， user_name(用户名称)，goods_id(商品id，外键) ，
+sub_time（评价提交时间，格式'2017-01-01 23:10:32'），sat_name（好评率类型，包含：“好评”、“中评”、“差评”）  
+
+商品详情表：b  
+字段：good_id（商品id，主键），bu_name（商品类目）, brand_name(品牌名称)  
+
+SELECT SUM(CASE WHEN sat_time = '好评' THEN 1 ELSE 0 END)/COUNT(sat_time) AS "好评率"  
+FROM a LEFT JOIN b on a.good_id = b.good_id  
+WHERE a.user_name = '小明‘ AND a.sub_time BETWEEN ('2018-01-01') AND ('2018-01-31' )  
+AND bu_name = '母婴' AND b.brand_name = '花王';  
